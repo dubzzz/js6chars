@@ -52,7 +52,7 @@ std::string char_repr(char value)
   }
 
   // 1e+308 === 1e308
-  if (from_known_str(out, "1e+308", [](){ return std::string("+(") + str_repr("1e308") + ")"; }, value))
+  if (from_known_str(out, "1e+308", [](){ return std::string("+(") + str_repr(std::string("1e308")) + ")"; }, value))
   {
     return out;
   }
@@ -128,7 +128,7 @@ std::string char_repr(char value)
 std::string str_repr(const char* str)
 {
   std::string out {};
-  for (auto it = str ; !!it ; ++it)
+  for (auto it = str ; *it ; ++it)
   {
     if (it != str)
     {
