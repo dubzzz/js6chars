@@ -43,7 +43,7 @@ int main(int argc, char** argv)
       switch (params[0][1])
       {
         case 'c':
-          if (params[1].size() != 1) { std::cout << "-c must be followed by one unisue character" << std::endl; break; }
+          if (params[1].size() != 1) { std::cout << "-c must be followed by one unique character" << std::endl; break; }
           std::cout << char_repr(params[1][0]) << std::endl;
           break;
         case 'n': std::cout << number_repr(std::stoi(params[1])) << std::endl; break;
