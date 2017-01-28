@@ -4,14 +4,26 @@
 
 #include "js6chars.hpp"
 
-
-std::string number_repr(int value)
+static std::string small_number_repr(int value)
 {
   return value == 0
       ? "+[]"
       : value == 1
         ? "++[[]][+[]]"
         : "++[" + number_repr(value -1) + "][+[]]";
+}
+
+static std::string number_repr_helper(int value)
+{
+  if (value < 10) return small_number_repr(value) + "+[]"; 
+  return number_repr_helper(value/10) + "+(" + small_number_repr(value%10) + ")";
+}
+
+std::string number_repr(int value)
+{
+  return value < 10
+      ? small_number_repr(value)
+      : std::string("+(") + number_repr_helper(value) + ")";
 }
 
 namespace {
