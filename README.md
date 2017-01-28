@@ -1,4 +1,4 @@
-# js6chars
+# js6chars [![Build Status](https://travis-ci.org/dubzzz/js6chars.svg?branch=master)](https://travis-ci.org/dubzzz/js6chars)
 Transform a JavaScript code into an equivalent JavaScript code using only 6 characters.
 
 Project implementation should be compatible with multiple web-browsers as long as they fit with the tricks decribed below.
