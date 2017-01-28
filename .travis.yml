@@ -53,8 +53,13 @@ script:
     echo "console.log(typeof $js6test); console.log($js6test)" | nodejs > js6.out.txt;
     echo "console.log(typeof $TEST); console.log($TEST)" | nodejs > expected.out.txt;
     diff js6.out.txt expected.out.txt
-  - export TEST="n";
+  - export TEST="100";
     js6test=`./build/js6chars -n "$TEST"`;
+    echo "console.log(typeof $js6test); console.log($js6test)" | nodejs > js6.out.txt;
+    echo "console.log(typeof $TEST); console.log($TEST)" | nodejs > expected.out.txt;
+    diff js6.out.txt expected.out.txt
+  - export TEST="n";
+    js6test=`./build/js6chars -c "$TEST"`;
     echo "console.log(typeof $js6test); console.log($js6test)" | nodejs > js6.out.txt;
     echo "console.log(typeof $TEST); console.log($TEST)" | nodejs > expected.out.txt;
     diff js6.out.txt expected.out.txt
