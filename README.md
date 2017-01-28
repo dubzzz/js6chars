@@ -59,7 +59,7 @@ Example:
  - ```"b" === 11["toString"](12)```
  - ...
 - ```"C" === Function("return atob(\"20N\")[1]")()```
-- All other characters: ````([]+[])["constructor"]["fromCharCode"](\d+)```
+- All other characters: ```([]+[])["constructor"]["fromCharCode"](\d+)```
 
 
 ## Sources
