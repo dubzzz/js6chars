@@ -21,6 +21,10 @@ static std::string number_repr_helper(int value)
 
 std::string number_repr(int value)
 {
+  if (value < 0)
+  {
+    return std::string("+(") + char_repr('-') + "+(" + number_repr_helper(-value) + "))";
+  }
   return value < 10
       ? small_number_repr(value)
       : std::string("+(") + number_repr_helper(value) + ")";
