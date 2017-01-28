@@ -48,16 +48,17 @@ script:
   - export CXX_STD="c++14"
   - cmake .
   - make -j4
-  - ./build/js6chars -n 5  # number_repr is the base case
-  - ./build/js6chars -c 5  # char_repr @ case # 1 -- from number_repr
-  - ./build/js6chars -c f  # char_repr @ case # 2 -- from undefined
-  - ./build/js6chars -c a  # char_repr @ case # 3 -- from NaN
-  - ./build/js6chars -c +  # char_repr @ case # 4 -- from 1e+308
-  - ./build/js6chars -c c  # char_repr @ case # 5 -- from function
-  - ./build/js6chars -c r  # char_repr @ case # 6 -- from true
-  - ./build/js6chars -c s  # char_repr @ case # 7 -- from false
-  - ./build/js6chars -c B  # char_repr @ case # 8 -- from constructor name
-  - ./build/js6chars -c z  # char_repr @ case # 9 -- from a-z
-  - ./build/js6chars -c C  # char_repr @ case #10 -- from atob("20N")
-  - ./build/js6chars -c Z  # char_repr @ case #11 -- from fromCharCode
-  - ./build/js6chars -s "Hello"
+  - time ./build/js6chars -n 5  # number_repr is the base case
+  - time ./build/js6chars -c 5  # char_repr @ case # 1 -- from number_repr
+  - time ./build/js6chars -c f  # char_repr @ case # 2 -- from undefined
+  - time ./build/js6chars -c a  # char_repr @ case # 3 -- from NaN
+  - time ./build/js6chars -c +  # char_repr @ case # 4 -- from 1e+308
+  - time ./build/js6chars -c c  # char_repr @ case # 5 -- from function
+  - time ./build/js6chars -c r  # char_repr @ case # 6 -- from true
+  - time ./build/js6chars -c s  # char_repr @ case # 7 -- from false
+  - time ./build/js6chars -c B  # char_repr @ case # 8 -- from constructor name
+  - time ./build/js6chars -c z  # char_repr @ case # 9 -- from a-z
+  - time ./build/js6chars -c C  # char_repr @ case #10 -- from atob("20N")
+  - time ./build/js6chars -c Z  # char_repr @ case #11 -- from fromCharCode
+  - time ./build/js6chars -t "Hello"
+  - time ./build/js6chars -s "alert('Hello')"
