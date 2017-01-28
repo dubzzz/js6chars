@@ -36,9 +36,9 @@ template <std::size_t N, class Gen> bool from_known_str(std::string& in, const c
   char const* it = std::find(std::begin(real_str), std::end(real_str), value);
   if (it != std::end(real_str))
   {
-    in = "[";
+    in = "(";
     in += offuscated_gen();
-    in += "+[]][+[]]";
+    in += "+[])";
     in += "[" + number_repr((int)(it - real_str)) + "]";
     return true;
   }
