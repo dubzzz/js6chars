@@ -1,0 +1,60 @@
+language: cpp
+sudo: false
+
+# List of apt packages available from Travis CI
+# can be found at: https://github.com/travis-ci/apt-package-whitelist
+addons_shortcuts:
+  addons_clang35: &clang35
+    apt:
+      sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports', 'llvm-toolchain-precise-3.5']
+      packages: ['clang-3.5', 'g++-4.9', 'cmake', 'cmake-data', 'nodejs', 'npm']
+  addons_clang38: &clang38
+    apt:
+      sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports', 'llvm-toolchain-precise-3.8']
+      packages: ['clang-3.8', 'g++-4.9', 'cmake', 'cmake-data', 'nodejs', 'npm']
+  addons_gcc49: &gcc49
+    apt:
+      sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports']
+      packages: ['g++-4.9', 'cmake', 'cmake-data', 'nodejs', 'npm']
+  addons_gcc6: &gcc6
+    apt:
+      sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports']
+      packages: ['g++-6', 'cmake', 'cmake-data', 'nodejs', 'npm']
+
+matrix:
+  include:
+    # Debian 8 Jessie, default setup: clang-3.5, g++-4.9
+    - os: linux
+      compiler: clang
+      env: COMPILER_VERSION=3.5
+      addons: *clang35
+    - os: linux
+      compiler: gcc
+      env: COMPILER_VERSION=4.9
+      addons: *gcc49
+    # Other versions
+    - os: linux
+      compiler: clang
+      env: COMPILER_VERSION=3.8
+      addons: *clang38
+    - os: linux
+      compiler: gcc
+      env: COMPILER_VERSION=6
+      addons: *gcc6
+
+script:
+  - export CC="${CC}-${COMPILER_VERSION}"
+  - export CXX="${CXX}-${COMPILER_VERSION}"
+  - export CXX_STD="c++14"
+  - cmake .
+  - make -j4
+  - export TEST="0";
+    js6test=`./build/js6chars -n "$TEST"`;
+    echo "console.log(typeof $js6test); console.log($js6test)" | nodejs > js6.out.txt;
+    echo "console.log(typeof $TEST); console.log($TEST)" | nodejs > expected.out.txt;
+    diff js6.out.txt expected.out.txt
+  - export TEST="n";
+    js6test=`./build/js6chars -n "$TEST"`;
+    echo "console.log(typeof $js6test); console.log($js6test)" | nodejs > js6.out.txt;
+    echo "console.log(typeof $TEST); console.log($TEST)" | nodejs > expected.out.txt;
+    diff js6.out.txt expected.out.txt
