@@ -23,8 +23,31 @@ Example:
  > +[]
 ```
 
+## How does it work?
+
+### Basic conversions in JavaScript
+
+- conversion to Boolean: add ! in front of the data -- eg.: ```!1 === false```
+- conversion to Number: add + in front of the data -- eg.: ```+"3" === 3```
+- conversion to String: add +[] to dta -- eg.: ```undefined+[] === "undefined"```
+
+### Trick by trick
+
+- Numbers from 0 to 9:
+ - ```+[] === 0```
+ - ```++[[]][+[]] === 1```
+ - ```++[++[[]][+[]]][+[]] === 2```
+ - ...
+ - ```++[N][+[]] === N+1```
+- Numbers' string representation: ```++[[]][+[]]+[] === "1"```
+- Letters from undefined:
+ - ```[][0] === undefined```
+ - ```[][+[]] === undefined```
+ - ```[][+[]]+[] === "undefined"```
+ - ```([][+[]]+[])[+[]] === "u"...```
+
 ## Sources
 
-Project is inspired from:
+Project inspired by:
 - http://slides.com/sylvainpv/xchars-js/
 - https://syllab.fr/projets/experiments/sixcharsjs/
