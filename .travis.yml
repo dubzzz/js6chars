@@ -48,6 +48,12 @@ script:
   - export CXX_STD="c++14"
   - cmake .
   - make -j4
+  - ./build/js6chars -n 5
+  - ./build/js6chars -c 5
+  - ./build/js6chars -c a
+  - ./build/js6chars -c C
+  - ./build/js6chars -c Z
+  - ./build/js6chars -s "Hello"
   - export TEST="0";
     js6test=`./build/js6chars -n "$TEST"`;
     echo "console.log(typeof $js6test); console.log($js6test)" | node > js6.out.txt;
