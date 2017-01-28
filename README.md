@@ -56,9 +56,9 @@ Example:
 - ```function Boolean() { [native code] } === (0).constructor === (0)["constructor"]``` -- B
 - Characters from a to z
  - ```"a" === 10["toString"](11)```
- - ````"b" === 11["toString"](12)```
+ - ```"b" === 11["toString"](12)```
  - ...
-- ````"C" === Function("return atob(\"20N\")[1]")()```
+- ```"C" === Function("return atob(\"20N\")[1]")()```
 - All other characters: ````([]+[])["constructor"]["fromCharCode"](\d+)```
 
 
