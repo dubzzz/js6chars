@@ -3,9 +3,12 @@ option=$1
 code=$2
 
 nodecmd=`which node || which nodejs`
+
+echo ""
+echo "Command: check_output.sh $1 \"$2\""
 js6code=`./build/js6chars "$option" "$code"`
 
-echo "Length: ${#js6code}"
+echo "Length : ${#js6code}"
 echo "Array.prototype.find = function find() { return this.indexOf(lookfor) !== -1; }; \
     function ArrayIterator() {}; \
     ArrayIterator.prototype.inject = function() { return '[object Array Iterator]'; }; \
@@ -21,5 +24,5 @@ then
 else
   echo "console.log(typeof \"$code\"); console.log(\"$code\")" | $nodecmd > expected.out.txt;
 fi
-diff js6.out.txt expected.out.txt
+git diff --no-index js6.out.txt expected.out.txt
 
