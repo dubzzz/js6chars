@@ -62,17 +62,17 @@ std::string char_repr(char value)
   }
 
   // NaN === +("u")
-  if (from_known_str(out, "NaN", [](){ return std::string("+(") + char_repr('u') + ")"; }, value))
+  if (from_known_str(out, "NaN", [](){ return std::string("+") + char_repr('u'); }, value))
   {
     return out;
   }
 
-  // 1e+308 === 1e308
-  if (from_known_str(out, "1e+308", [](){ return std::string("+(") + str_repr(std::string("1e308")) + ")"; }, value))
+  // 1e+30 === 1e30
+  if (from_known_str(out, "1e+30", [](){ return std::string("+(") + str_repr(std::string("1e30")) + ")"; }, value))
   {
     return out;
   }
-
+  
   // function find() { [native code] } === []["find"]
   if (from_known_str(out, "function find()", [](){ return std::string("[][") + str_repr("find") + "]"; }, value))
   {
@@ -87,6 +87,12 @@ std::string char_repr(char value)
 
   // false === ![]
   if (from_known_str(out, "false", [](){ return std::string("![]"); }, value))
+  {
+    return out;
+  }
+  
+  // Infinity === 1e1000
+  if (from_known_str(out, "Infinity", [](){ return std::string("+") + str_repr(std::string("1e1000")); }, value))
   {
     return out;
   }
@@ -116,7 +122,7 @@ std::string char_repr(char value)
   }
 
   // function Function() { [native code] } === (0).constructor.constructor === (0)["constructor"]["constructor"]
-  if (from_known_str(out, "function Function()", [](){ return std::string("[][") + str_repr("constructor") + "][" + str_repr("constructor") + "]"; }, value))
+  if (from_known_str(out, "function Function()", [](){ return std::string("[][") + str_repr("find") + "][" + str_repr("constructor") + "]"; }, value))
   {
     return out;
   }
@@ -131,7 +137,11 @@ std::string char_repr(char value)
   // "b" === 11["toString"](12)...
   if (value >= 'a' && value <= 'z')
   {
-    return "(" + number_repr(10 + value -'a') + ")[" + str_repr("toString") + "](" + number_repr(11 + value -'a') + ")";
+    int base = 11 + value -'a';
+    if (base <= 30) { // max is 36
+      base = ((int)(base/10) +1) * 10;
+    }
+    return "(" + number_repr(10 + value -'a') + ")[" + str_repr("toString") + "](" + number_repr(base) + ")";
   }
 
   // "C" == window["atob"]("20N")[1]
