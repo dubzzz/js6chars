@@ -74,7 +74,7 @@ std::string char_repr(char value)
   }
 
   // function find() { [native code] } === []["find"]
-  if (from_known_str(out, "function find() { [native code] }", [](){ return std::string("[][") + str_repr("find") + "]"; }, value))
+  if (from_known_str(out, "function find()", [](){ return std::string("[][") + str_repr("find") + "]"; }, value))
   {
     return out;
   }
@@ -90,33 +90,39 @@ std::string char_repr(char value)
   {
     return out;
   }
+  
+  // [object Array Iterator] === []["entries"]()
+  if (from_known_str(out, "[object Array Iterator]", [](){ return std::string("[][") + str_repr("entries") + "]()"; }, value))
+  {
+    return out;
+  }
 
   // function Number() { [native code] } === (0).constructor === (0)["constructor"]
-  if (from_known_str(out, "function Number() { [native code] }", [](){ return std::string("(+[])[") + str_repr("constructor") + "]"; }, value))
+  if (from_known_str(out, "function Number()", [](){ return std::string("(+[])[") + str_repr("constructor") + "]"; }, value))
   {
     return out;
   }
 
   // function Array() { [native code] } === (0).constructor === (0)["constructor"]
-  if (from_known_str(out, "function Array() { [native code] }", [](){ return std::string("[][") + str_repr("constructor") + "]"; }, value))
+  if (from_known_str(out, "function Array()", [](){ return std::string("[][") + str_repr("constructor") + "]"; }, value))
   {
     return out;
   }
 
   // function String() { [native code] } === (0).constructor === (0)["constructor"]
-  if (from_known_str(out, "function String() { [native code] }", [](){ return std::string("([]+[])[") + str_repr("constructor") + "]"; }, value))
+  if (from_known_str(out, "function String()", [](){ return std::string("([]+[])[") + str_repr("constructor") + "]"; }, value))
   {
     return out;
   }
 
   // function Function() { [native code] } === (0).constructor.constructor === (0)["constructor"]["constructor"]
-  if (from_known_str(out, "function Function() { [native code] }", [](){ return std::string("[][") + str_repr("constructor") + "][" + str_repr("constructor") + "]"; }, value))
+  if (from_known_str(out, "function Function()", [](){ return std::string("[][") + str_repr("constructor") + "][" + str_repr("constructor") + "]"; }, value))
   {
     return out;
   }
 
   // function Boolean() { [native code] } === (0).constructor === (0)["constructor"]
-  if (from_known_str(out, "function Boolean() { [native code] }", [](){ return std::string("(![])[") + str_repr("constructor") + "][" + str_repr("constructor") + "]"; }, value))
+  if (from_known_str(out, "function Boolean()", [](){ return std::string("(![])[") + str_repr("constructor") + "][" + str_repr("constructor") + "]"; }, value))
   {
     return out;
   }

@@ -1,8 +1,10 @@
 # js6chars [![Build Status](https://travis-ci.org/dubzzz/js6chars.svg?branch=master)](https://travis-ci.org/dubzzz/js6chars)
 Transform a JavaScript code into an equivalent JavaScript code using only 6 characters.
 
-Project implementation hightly relies on Google Chrome web-browser way of displaying its datatypes.
-It is not supposed to work with other browsers as soon as you leave the ```-c <number>``` (with positive number) case.
+Project implementation hightly relies on  ways web-browsers dysplay some datatypes.
+It is supposed to work under both Firefox and Google Chrome.
+
+Nonetheless ```-c <positive number>``` should work on every browser.
 
 ## How to use it?
 
