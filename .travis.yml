@@ -7,19 +7,19 @@ addons_shortcuts:
   addons_clang35: &clang35
     apt:
       sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports', 'llvm-toolchain-precise-3.5']
-      packages: ['clang-3.5', 'g++-4.9', 'cmake', 'cmake-data']
+      packages: ['clang-3.5', 'g++-4.9', 'cmake', 'cmake-data', 'nodejs', 'npm']
   addons_clang38: &clang38
     apt:
       sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports', 'llvm-toolchain-precise-3.8']
-      packages: ['clang-3.8', 'g++-4.9', 'cmake', 'cmake-data']
+      packages: ['clang-3.8', 'g++-4.9', 'cmake', 'cmake-data', 'nodejs', 'npm']
   addons_gcc49: &gcc49
     apt:
       sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports']
-      packages: ['g++-4.9', 'cmake', 'cmake-data']
+      packages: ['g++-4.9', 'cmake', 'cmake-data', 'nodejs', 'npm']
   addons_gcc6: &gcc6
     apt:
       sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports']
-      packages: ['g++-6', 'cmake', 'cmake-data']
+      packages: ['g++-6', 'cmake', 'cmake-data', 'nodejs', 'npm']
 
 matrix:
   include:
@@ -48,17 +48,17 @@ script:
   - export CXX_STD="c++14"
   - cmake .
   - make -j4
-  - time ./build/js6chars -n 5  # number_repr is the base case
-  - time ./build/js6chars -c 5  # char_repr @ case # 1 -- from number_repr
-  - time ./build/js6chars -c f  # char_repr @ case # 2 -- from undefined
-  - time ./build/js6chars -c a  # char_repr @ case # 3 -- from NaN
-  - time ./build/js6chars -c +  # char_repr @ case # 4 -- from 1e+308
-  - time ./build/js6chars -c c  # char_repr @ case # 5 -- from function
-  - time ./build/js6chars -c r  # char_repr @ case # 6 -- from true
-  - time ./build/js6chars -c s  # char_repr @ case # 7 -- from false
-  - time ./build/js6chars -c B  # char_repr @ case # 8 -- from constructor name
-  - time ./build/js6chars -c z  # char_repr @ case # 9 -- from a-z
-  - time ./build/js6chars -c C  # char_repr @ case #10 -- from atob("20N")
-  - time ./build/js6chars -c Z  # char_repr @ case #11 -- from fromCharCode
-  - time ./build/js6chars -t "Hello"
-  - time ./build/js6chars -s "alert('Hello')"
+  - chmod +x check_output.sh
+  - time ./check_output.sh -n 5  # number_repr is the base case
+  - time ./check_output.sh -c 5  # char_repr @ case # 1 -- from number_repr
+  - time ./check_output.sh -c f  # char_repr @ case # 2 -- from undefined
+  - time ./check_output.sh -c a  # char_repr @ case # 3 -- from NaN
+  - time ./check_output.sh -c +  # char_repr @ case # 4 -- from 1e+308
+  - time ./check_output.sh -c c  # char_repr @ case # 5 -- from function
+  - time ./check_output.sh -c r  # char_repr @ case # 6 -- from true
+  - time ./check_output.sh -c s  # char_repr @ case # 7 -- from false
+  - time ./check_output.sh -c B  # char_repr @ case # 8 -- from constructor name
+  - time ./check_output.sh -c z  # char_repr @ case # 9 -- from a-z
+  - time ./check_output.sh -c C  # char_repr @ case #10 -- from atob("20N")
+  - time ./check_output.sh -c Z  # char_repr @ case #11 -- from fromCharCode
+  - time ./check_output.sh -t "Hello"
