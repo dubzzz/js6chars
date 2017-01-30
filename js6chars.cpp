@@ -122,7 +122,7 @@ std::string char_repr(char value)
   }
 
   // function Boolean() { [native code] } === (0).constructor === (0)["constructor"]
-  if (from_known_str(out, "function Boolean()", [](){ return std::string("(![])[") + str_repr("constructor") + "][" + str_repr("constructor") + "]"; }, value))
+  if (from_known_str(out, "function Boolean()", [](){ return std::string("(![])[") + str_repr("constructor") + "]"; }, value))
   {
     return out;
   }
