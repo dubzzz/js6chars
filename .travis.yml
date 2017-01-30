@@ -48,6 +48,8 @@ script:
   - export CXX_STD="c++14"
   - cmake .
   - make -j4
+  - chmod +x check_compatibility.sh
+  - ./check_compatibility.sh
   - chmod +x check_output.sh
   - time ./check_output.sh -n 5  # number_repr is the base case
   - time ./check_output.sh -c 5  # char_repr @ case # 1 -- from number_repr
