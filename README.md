@@ -52,10 +52,10 @@ Example:
 - ```true === !![]``` -- r
 - ```false === ![]``` -- l,s
 - ```function Number() { [native code] } === (0).constructor === (0)["constructor"]``` -- b,m,r
-- ```function Array() { [native code] } === (0).constructor === (0)["constructor"]``` -- y,A
-- ```function String() { [native code] } === (0).constructor === (0)["constructor"]``` -- g,S
-- ```function Function() { [native code] } === (0).constructor === (0)["constructor"]``` -- F
-- ```function Boolean() { [native code] } === (0).constructor === (0)["constructor"]``` -- B
+- ```function Array() { [native code] } === (0).constructor === []["constructor"]``` -- y,A
+- ```function String() { [native code] } === (0).constructor === ([]+[])["constructor"]``` -- g,S
+- ```function Function() { [native code] } === (0).constructor === []["constructor"]["constructor"]``` -- F
+- ```function Boolean() { [native code] } === (0).constructor === (![])["constructor"]``` -- B
 - Characters from a to z
  - ```"a" === 10["toString"](11)```
  - ```"b" === 11["toString"](12)```
