@@ -50,3 +50,6 @@ build/
 Debug/
 Release/
 
+# Others
+*.out.txt
+
