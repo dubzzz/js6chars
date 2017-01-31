@@ -21,6 +21,9 @@ echo "Array.prototype.find = function find() { return this.indexOf(lookfor) !== 
 if [ "$option" = "-n" ]
 then
   echo "console.log(typeof $code); console.log($code)" | $nodecmd > expected.out.txt;
+elif [ "$option" = "-s" ]
+then
+  echo "console.log(typeof ($code)); console.log($code)" | $nodecmd > expected.out.txt;
 else
   echo "console.log(typeof \"$code\"); console.log(\"$code\")" | $nodecmd > expected.out.txt;
 fi
