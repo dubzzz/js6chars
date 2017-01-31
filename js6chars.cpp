@@ -188,15 +188,15 @@ struct NumberInBaseGenerator : Generator
 struct CGenerator : Generator
 {
   static constexpr const char* generate = "C";
-  static constexpr const char* require = "findconstructorreturn atob(arguments[])N";
+  static constexpr const char* require = "findconstructorreturn atobN";
   std::string operator() (char, bool* cannot_use) override {
     std::string method_label = str_repr("find", cannot_use);
     std::string constructor = str_repr("constructor", cannot_use);
-    std::string running_code = str_repr("return atob(arguments[0])", cannot_use);
+    std::string running_code = str_repr("return atob", cannot_use);
     std::string parameter = str_repr("20N", cannot_use);
     return method_label.empty() || constructor.empty() || running_code.empty() || parameter.empty()
         ? ""
-        : "[][" + method_label + "][" + constructor + "](" + running_code + ")(" + parameter + ")[" + number_repr(1) + "]"; }
+        : "[][" + method_label + "][" + constructor + "](" + running_code + ")()(" + parameter + ")[" + number_repr(1) + "]"; }
 };
 struct AllGenerator : Generator
 {
