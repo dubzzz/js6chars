@@ -167,8 +167,8 @@ struct NumberInBaseGenerator : Generator
 struct CGenerator : Generator
 {
   static constexpr const char* generate = "C";
-  static constexpr const char* require = "construfid[]+()e abN";// ! cannot be encountered because str_repr("20N", '!')
-  std::string operator() (char, bool* cannot_use, char forbidden) override { return "[][" + str_repr("find", cannot_use, forbidden) + "][" + str_repr("constructor", cannot_use, forbidden) + "](" + str_repr("return atob(" + str_repr("20N", cannot_use, '!') + ")[1]", cannot_use, forbidden) + ")()"; }
+  static constexpr const char* require = "findconstructorreturn atob(arguments[])N";
+  std::string operator() (char, bool* cannot_use, char forbidden) override { return "[][" + str_repr("find", cannot_use, forbidden) + "][" + str_repr("constructor", cannot_use, forbidden) + "](" + str_repr("return atob(arguments[0])", cannot_use, forbidden) + ")(" + str_repr("20N", cannot_use, forbidden) + ")[" + number_repr(1) + "]"; }
 };
 struct AllGenerator : Generator
 {
