@@ -8,6 +8,7 @@
 #include <vector>
 #ifdef _DEBUG
   #include <iostream>
+  #include <typeinfo>
 #endif
 
 #include "js6chars.hpp"
@@ -89,13 +90,17 @@ struct PlusGenerator : Generator
 {
   static constexpr const char* generate = "+";
   static constexpr const char* require = "e";
-  std::string operator() (char value, bool* cannot_use, char forbidden) override { return from_known(value, "1e+30", "+(" + str_repr("1e30", cannot_use, forbidden) + ")"); }
+  std::string operator() (char value, bool* cannot_use, char forbidden) override {
+    std::string data = str_repr("1e30", cannot_use, forbidden);
+    return data.empty() ? "" : from_known(value, "1e+30", "+(" + data + ")"); }
 };
 struct FindGenerator : Generator
 {
   static constexpr const char* generate = "ucto ()";
   static constexpr const char* require = "find";
-  std::string operator() (char value, bool* cannot_use, char forbidden) override { return from_known(value, "function find()", "[][" + str_repr("find", cannot_use, forbidden) + "]"); }
+  std::string operator() (char value, bool* cannot_use, char forbidden) override {
+    std::string data = str_repr("find", cannot_use, forbidden);
+    return data.empty() ? "" : from_known(value, "function find()", "[][" + data + "]"); }
 };
 struct TrueGenerator : Generator
 {
@@ -113,43 +118,58 @@ struct InfinityGenerator : Generator
 {
   static constexpr const char* generate = "Infity";
   static constexpr const char* require = "e";
-  std::string operator() (char value, bool* cannot_use, char forbidden) override { return from_known(value, "Infinity", "+(" + str_repr("1e1000", cannot_use, forbidden) + ")"); }
+  std::string operator() (char value, bool* cannot_use, char forbidden) override {
+    std::string data = str_repr("1e1000", cannot_use, forbidden);
+    return data.empty() ? "" : from_known(value, "Infinity", "+(" + data + ")"); }
 };
 struct SquareBracketGenerator : Generator
 {
   static constexpr const char* generate = "[objct AayIa]";
   static constexpr const char* require = "entris";
-  std::string operator() (char value, bool* cannot_use, char forbidden) override { return from_known(value, "[object Array Iterator]", "[][" + str_repr("entries", cannot_use, forbidden) + "]"); }
+  std::string operator() (char value, bool* cannot_use, char forbidden) override {
+    std::string data = str_repr("entries", cannot_use, forbidden);
+    return data.empty() ? "" : from_known(value, "[object Array Iterator]", "[][" + data + "]"); }
 };
 struct ClassArrayGenerator : Generator
 {
   static constexpr const char* generate = "fi Aay()";
   static constexpr const char* require = "constru";
-  std::string operator() (char value, bool* cannot_use, char forbidden) override { return from_known(value, "function Array()", "[][" + str_repr("constructor", cannot_use, forbidden) + "]"); }
+  std::string operator() (char value, bool* cannot_use, char forbidden) override {
+    std::string data = str_repr("constructor", cannot_use, forbidden);
+    return data.empty() ? "" : from_known(value, "function Array()", "[][" + data + "]"); }
 };
 struct ClassBooleanGenerator : Generator
 {
   static constexpr const char* generate = "fi Blea()";
   static constexpr const char* require = "constru";
-  std::string operator() (char value, bool* cannot_use, char forbidden) override { return from_known(value, "function Boolean()", "(![])[" + str_repr("constructor", cannot_use, forbidden) + "]"); }
+  std::string operator() (char value, bool* cannot_use, char forbidden) override {
+    std::string data = str_repr("constructor", cannot_use, forbidden);
+    return data.empty() ? "" : from_known(value, "function Boolean()", "(![])[" + data + "]"); }
 };
 struct ClassNumberGenerator : Generator
 {
   static constexpr const char* generate = "fi Nmbe()";
   static constexpr const char* require = "constru";
-  std::string operator() (char value, bool* cannot_use, char forbidden) override { return from_known(value, "function Number()", "(+[])[" + str_repr("constructor", cannot_use, forbidden) + "]"); }
+  std::string operator() (char value, bool* cannot_use, char forbidden) override {
+    std::string data = str_repr("constructor", cannot_use, forbidden);
+    return data.empty() ? "" : from_known(value, "function Number()", "(+[])[" + data + "]"); }
 };
 struct ClassStringGenerator : Generator
 {
   static constexpr const char* generate = "fi Sg()";
   static constexpr const char* require = "constru";
-  std::string operator() (char value, bool* cannot_use, char forbidden) override { return from_known(value, "function String()", "([]+[])[" + str_repr("constructor", cannot_use, forbidden) + "]"); }
+  std::string operator() (char value, bool* cannot_use, char forbidden) override {
+    std::string data = str_repr("constructor", cannot_use, forbidden);
+    return data.empty() ? "" : from_known(value, "function String()", "([]+[])[" + data + "]"); }
 };
 struct ClassFunctionGenerator : Generator
 {
   static constexpr const char* generate = " F()";
   static constexpr const char* require = "construfid";
-  std::string operator() (char value, bool* cannot_use, char forbidden) override { return from_known(value, "function Function()", "[][" + str_repr("find", cannot_use, forbidden) + "][" + str_repr("constructor", cannot_use, forbidden) + "]"); }
+  std::string operator() (char value, bool* cannot_use, char forbidden) override {
+    std::string method_label = str_repr("find", cannot_use, forbidden);
+    std::string constructor = str_repr("constructor", cannot_use, forbidden);
+    return method_label.empty() || constructor.empty() ? "" : from_known(value, "function Function()", "[][" + method_label + "][" + constructor + "]"); }
 };
 struct NumberInBaseGenerator : Generator
 {
@@ -161,19 +181,32 @@ struct NumberInBaseGenerator : Generator
     if (base <= 30) { // max is 36
       base = ((int)(base/10) +1) * 10;
     }
-    return "(" + number_repr(10 + value -'a') + ")[" + str_repr("toString", cannot_use, forbidden) + "](" + number_repr(base) + ")";
+    std::string data = str_repr("toString", cannot_use, forbidden);
+    return data.empty() ? "" : "(" + number_repr(10 + value -'a') + ")[" + data + "](" + number_repr(base) + ")";
   }
 };
 struct CGenerator : Generator
 {
   static constexpr const char* generate = "C";
   static constexpr const char* require = "findconstructorreturn atob(arguments[])N";
-  std::string operator() (char, bool* cannot_use, char forbidden) override { return "[][" + str_repr("find", cannot_use, forbidden) + "][" + str_repr("constructor", cannot_use, forbidden) + "](" + str_repr("return atob(arguments[0])", cannot_use, forbidden) + ")(" + str_repr("20N", cannot_use, forbidden) + ")[" + number_repr(1) + "]"; }
+  std::string operator() (char, bool* cannot_use, char forbidden) override {
+    std::string method_label = str_repr("find", cannot_use, forbidden);
+    std::string constructor = str_repr("constructor", cannot_use, forbidden);
+    std::string running_code = str_repr("return atob(arguments[0])", cannot_use, forbidden);
+    std::string parameter = str_repr("20N", cannot_use, forbidden);
+    return method_label.empty() || constructor.empty() || running_code.empty() || parameter.empty()
+        ? ""
+        : "[][" + method_label + "][" + constructor + "](" + running_code + ")(" + parameter + ")[" + number_repr(1) + "]"; }
 };
 struct AllGenerator : Generator
 {
   static constexpr const char* require = "construfmChade";// and also !
-  std::string operator() (char value, bool* cannot_use, char forbidden) override { return "([]+[])[" + str_repr("constructor", cannot_use, forbidden) + "][" + str_repr("fromCharCode", cannot_use, forbidden) + "](" + number_repr((int)value) + ")"; }
+  std::string operator() (char value, bool* cannot_use, char forbidden) override {
+    std::string constructor = str_repr("constructor", cannot_use, forbidden);
+    std::string method_charcode = str_repr("fromCharCode", cannot_use, forbidden);
+    return constructor.empty() || method_charcode.empty()
+        ? ""
+        : "([]+[])[" + constructor + "][" + method_charcode + "](" + number_repr((int)value) + ")"; }
 };
 
 template <class Gen> void push_dependency(auto&& tree, char c)
@@ -242,12 +275,15 @@ std::string char_repr(char value, bool* cannot_use, char forbidden)
 {
   static const auto tree = build_dependency_tree();
 #ifdef _DEBUG
+  unsigned iter_id = std::count(cannot_use, cannot_use+256, true);
+  for (unsigned i {} ; i != iter_id ; ++i) { std::cout << "    "; }
   std::cout << "Generating (" << ((int)value) << ")'" << value << "'";
   if (forbidden) std::cout << " with forbidden (" << ((int)forbidden) << ")'" << forbidden << "'";
   std::cout << std::endl;
 #endif
   auto const& choices = tree[value - CHAR_MIN];
 #ifdef _DEBUG
+  for (unsigned i {} ; i != iter_id ; ++i) { std::cout << "    "; }
   std::cout << "  # " << choices.size() << " candidates" << std::endl;
 #endif
 
@@ -256,15 +292,13 @@ std::string char_repr(char value, bool* cannot_use, char forbidden)
   for (auto const& choice : choices)
   {
     std::string const& require = choice.first;
-#ifdef _DEBUG
-    std::cout << "  candidate with require: " << require << std::endl;
-#endif
     if (std::find_if(require.begin(), require.end(), [cannot_use](auto c) { return cannot_use[c - CHAR_MIN]; }) == require.end())
     {
       generators.push_back(choice.second.get());
     }
   }
 #ifdef _DEBUG
+  for (unsigned i {} ; i != iter_id ; ++i) { std::cout << "    "; }
   std::cout << "  # " << generators.size() << " selected" << std::endl;
 #endif
   
@@ -275,11 +309,16 @@ std::string char_repr(char value, bool* cannot_use, char forbidden)
   std::string best_match;
   for (auto gen : generators)
   {
+#ifdef _DEBUG
+    for (unsigned i {} ; i != iter_id ; ++i) { std::cout << "    "; }
+    std::cout << "  :using generator <" << typeid(*gen).name() << ">" << std::endl;
+#endif
     std::string match = gen->operator()(value, cannot_use, forbidden);
 #ifdef _DEBUG
-    std::cout << "  :(" << ((int)value) << ")'" << value << "': " << match << std::endl;
+    for (unsigned i {} ; i != iter_id ; ++i) { std::cout << "    "; }
+    std::cout << "  :(" << ((int)value) << ")'" << value << "': <" << typeid(*gen).name() << "> : " << match << std::endl;
 #endif
-    if (best_match.empty() || best_match.size() > match.size())
+    if (best_match.empty() || (best_match.size() > match.size() && ! match.empty()))
     {
       best_match = match;
     }
