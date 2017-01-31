@@ -310,7 +310,9 @@ std::string str_repr(const char* str, bool* cannot_use, char forbidden)
       out += '+';
     }
     out += '(';
-    out += char_repr(*it, cannot_use, forbidden);
+    auto forchar = char_repr(*it, cannot_use, forbidden);
+    if (forchar.empty()) { return ""; }
+    out += forchar;
     out += ')';
   }
   return out;
