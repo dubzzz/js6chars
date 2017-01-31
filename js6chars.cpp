@@ -128,7 +128,7 @@ struct SquareBracketGenerator : Generator
   static constexpr const char* require = "entris";
   std::string operator() (char value, bool* cannot_use, char forbidden) override {
     std::string data = str_repr("entries", cannot_use, forbidden);
-    return data.empty() ? "" : from_known(value, "[object Array Iterator]", "[][" + data + "]"); }
+    return data.empty() ? "" : from_known(value, "[object Array Iterator]", "[][" + data + "]()"); }
 };
 struct ClassArrayGenerator : Generator
 {
