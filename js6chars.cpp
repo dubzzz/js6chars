@@ -86,6 +86,12 @@ struct SmallerNanGenerator : Generator
   static constexpr const char* require = "";
   std::string operator() (char value, bool* /*cannot_use*/) override { return from_known(value, "NaN", "+(![]+[])"); }
 };
+struct SmallerNanBisGenerator : Generator
+{
+  static constexpr const char* generate = "Na";
+  static constexpr const char* require = "";
+  std::string operator() (char value, bool* /*cannot_use*/) override { return from_known(value, "NaN", "+[][+[]]"); }
+};
 struct PlusGenerator : Generator
 {
   static constexpr const char* generate = "+";
@@ -237,6 +243,7 @@ auto build_dependency_tree()
   push_dependencies<UndefinedGenerator>(tree);
   push_dependencies<NanGenerator>(tree);
   push_dependencies<SmallerNanGenerator>(tree);
+  push_dependencies<SmallerNanBisGenerator>(tree);
   push_dependencies<PlusGenerator>(tree);
   push_dependencies<FindGenerator>(tree);
   push_dependencies<TrueGenerator>(tree);
