@@ -209,7 +209,7 @@ struct AllGenerator : Generator
         : "([]+[])[" + constructor + "][" + method_charcode + "](" + number_repr((int)value) + ")"; }
 };
 
-template <class Gen> void push_dependency(auto&& tree, char c)
+template <class Gen, class Tree> void push_dependency(Tree&& tree, char c)
 {
   constexpr const char* str = Gen::require;
 #ifdef _DEBUG
@@ -217,7 +217,7 @@ template <class Gen> void push_dependency(auto&& tree, char c)
 #endif 
   tree[c - CHAR_MIN].emplace_back(str, std::make_unique<Gen>());
 }
-template <class Gen> void push_dependencies(auto&& tree)
+template <class Gen, class Tree> void push_dependencies(Tree&& tree)
 {
   for (auto it = Gen::generate ; !!*it ; ++it) { push_dependency<Gen>(tree, *it); }
 }
