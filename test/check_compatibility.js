@@ -68,6 +68,7 @@ num_errors += check_ok("Basic outputs: String constructor", truncate("".construc
 num_errors += check_ok("toString in non-10 base works as expected", 11["toString"](12), "b");
 num_errors += check_ok("atob works as expected", atob("20N")[1], "C");
 num_errors += check_nok("fromCharCode defined on String", ([]+[])["constructor"]["fromCharCode"], undefined);
+num_errors += check_ok("Retrieve comma", [[]].concat(0)+[], ",0");
 
 process.exit(num_errors);
 

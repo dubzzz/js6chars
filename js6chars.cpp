@@ -74,6 +74,12 @@ struct UndefinedGenerator : Generator
   static constexpr const char* require = "";
   std::string operator() (char value, bool* /*cannot_use*/) override { return from_known(value, "undefined", "[][+[]]"); }
 };
+struct CommaGenerator : Generator
+{
+  static constexpr const char* generate = ",";
+  static constexpr const char* require = "conat";
+  std::string operator() (char /*value*/, bool* cannot_use) override { return "[[]][" + str_repr("concat", cannot_use) + "](+[])"; }
+};
 struct NanGenerator : Generator
 {
   static constexpr const char* generate = "Na";
@@ -241,6 +247,7 @@ auto build_dependency_tree()
 #endif 
   push_dependencies<NumberGenerator>(tree);
   push_dependencies<UndefinedGenerator>(tree);
+  push_dependencies<CommaGenerator>(tree);
   push_dependencies<NanGenerator>(tree);
   push_dependencies<SmallerNanGenerator>(tree);
   push_dependencies<SmallerNanBisGenerator>(tree);
