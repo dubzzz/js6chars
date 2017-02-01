@@ -384,7 +384,10 @@ std::string str_repr(const char* str, bool* cannot_use)
     if (it != str)
     {
       out += '+';
-      
+      if (forchar[forchar.size() -3] == '+' && forchar[forchar.size() -2] == '[' && forchar[forchar.size() -1] == ']')
+      {
+        forchar = forchar.substr(0, forchar.size() -3);
+      }
       if (forchar[0] == '+')
       {
         out += '(';
