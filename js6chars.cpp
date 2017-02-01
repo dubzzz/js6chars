@@ -378,15 +378,28 @@ std::string str_repr(const char* str, bool* cannot_use)
   }
   for (auto it = str ; *it ; ++it)
   {
+    auto forchar = char_repr(*it, cannot_use);
+    if (forchar.empty()) { return ""; }
+    
     if (it != str)
     {
       out += '+';
+      
+      if (forchar[0] == '+')
+      {
+        out += '(';
+        out += forchar;
+        out += ')';
+      }
+      else
+      {
+        out += forchar;
+      }
     }
-    out += '(';
-    auto forchar = char_repr(*it, cannot_use);
-    if (forchar.empty()) { return ""; }
-    out += forchar;
-    out += ')';
+    else
+    {
+      out += forchar;
+    }
   }
   return out;
 }
