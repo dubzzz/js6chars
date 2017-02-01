@@ -164,44 +164,44 @@ struct ClosedCurlyBracedGenerator : Generator
 };
 struct ClassArrayGenerator : Generator
 {
-  static constexpr const char* generate = "fi Aay()";
+  static constexpr const char* generate = "fi Aay(){";
   static constexpr const char* require = "constru";
   std::string operator() (char value, bool* cannot_use) override {
     std::string data = str_repr("constructor", cannot_use);
-    return data.empty() ? "" : from_known(value, "function Array()", "[][" + data + "]"); }
+    return data.empty() ? "" : from_known(value, "function Array() {", "[][" + data + "]"); }
 };
 struct ClassBooleanGenerator : Generator
 {
-  static constexpr const char* generate = "fi Blea()";
+  static constexpr const char* generate = "fi Blea(){";
   static constexpr const char* require = "constru";
   std::string operator() (char value, bool* cannot_use) override {
     std::string data = str_repr("constructor", cannot_use);
-    return data.empty() ? "" : from_known(value, "function Boolean()", "(![])[" + data + "]"); }
+    return data.empty() ? "" : from_known(value, "function Boolean() {", "(![])[" + data + "]"); }
 };
 struct ClassNumberGenerator : Generator
 {
-  static constexpr const char* generate = "fi Nmbe()";
+  static constexpr const char* generate = "fi Nmbe(){";
   static constexpr const char* require = "constru";
   std::string operator() (char value, bool* cannot_use) override {
     std::string data = str_repr("constructor", cannot_use);
-    return data.empty() ? "" : from_known(value, "function Number()", "(+[])[" + data + "]"); }
+    return data.empty() ? "" : from_known(value, "function Number() {", "(+[])[" + data + "]"); }
 };
 struct ClassStringGenerator : Generator
 {
-  static constexpr const char* generate = "fi Sg()";
+  static constexpr const char* generate = "fi Sg(){";
   static constexpr const char* require = "constru";
   std::string operator() (char value, bool* cannot_use) override {
     std::string data = str_repr("constructor", cannot_use);
-    return data.empty() ? "" : from_known(value, "function String()", "([]+[])[" + data + "]"); }
+    return data.empty() ? "" : from_known(value, "function String() {", "([]+[])[" + data + "]"); }
 };
 struct ClassFunctionGenerator : Generator
 {
-  static constexpr const char* generate = " F()";
+  static constexpr const char* generate = " F(){";
   static constexpr const char* require = "construfid";
   std::string operator() (char value, bool* cannot_use) override {
     std::string method_label = str_repr("find", cannot_use);
     std::string constructor = str_repr("constructor", cannot_use);
-    return method_label.empty() || constructor.empty() ? "" : from_known(value, "function Function()", "[][" + method_label + "][" + constructor + "]"); }
+    return method_label.empty() || constructor.empty() ? "" : from_known(value, "function Function() {", "[][" + method_label + "][" + constructor + "]"); }
 };
 struct NumberInBaseGenerator : Generator
 {
