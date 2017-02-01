@@ -80,7 +80,7 @@ struct CommaGenerator : Generator
   static constexpr const char* require = "conat";
   std::string operator() (char /*value*/, bool* cannot_use) override {
     std::string data = str_repr("concat", cannot_use);
-    return data.empty() ? "" : "([[]][" + data + "]+[])(+[])"; }
+    return data.empty() ? "" : "([[]][" + data + "](+[])+[])[+[]]"; }
 };
 struct NanGenerator : Generator
 {
