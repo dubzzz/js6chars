@@ -39,8 +39,8 @@ if ([].entries === undefined) {
 }
 if ([].constructor.toString().indexOf("function Array()") !== 0) {
   console.log("WARN  need to inject Function.prototype.toString to have the right output");
-  Function.prototype.inspect = function() { return 'function ' + this.name + '()'; };
-  Function.prototype.toString = function() { return 'function ' + this.name + '()'; };
+  Function.prototype.inspect = function() { return 'function ' + this.name + '() {}'; };
+  Function.prototype.toString = function() { return 'function ' + this.name + '() {}'; };
 }
 if (typeof atob === 'undefined') {
   console.log("WARN  need to inject atob");

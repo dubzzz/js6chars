@@ -14,8 +14,8 @@ echo "Array.prototype.find = function find() { return this.indexOf(lookfor) !== 
     ArrayIterator.prototype.inject = function() { return '[object Array Iterator]'; }; \
     ArrayIterator.prototype.toString = function() { return '[object Array Iterator]'; }; \
     Array.prototype.entries = function(lookfor) { return new ArrayIterator(); }; \
-    Function.prototype.inspect = function() { return 'function ' + this.name + '()'; }; \
-    Function.prototype.toString = function() { return 'function ' + this.name + '()'; }; \
+    Function.prototype.inspect = function() { return 'function ' + this.name + '() {}'; }; \
+    Function.prototype.toString = function() { return 'function ' + this.name + '() {}'; }; \
     atob = function() { return '?C'; }; \
     console.log(typeof ($js6code)); console.log($js6code)" | $nodecmd > js6.out.txt;
 if [ "$option" = "-n" ]

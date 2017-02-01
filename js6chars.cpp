@@ -152,6 +152,16 @@ struct SquareBracketGenerator : Generator
     std::string data = str_repr("entries", cannot_use);
     return data.empty() ? "" : from_known(value, "[object Array Iterator]", "[][" + data + "]()"); }
 };
+struct ClosedCurlyBracedGenerator : Generator
+{//console.log(([].find+[]).split([]+[]).sort().reverse()[0]);
+  static constexpr const char* generate = "}";
+  static constexpr const char* require = "findspltrev";
+  std::string operator() (char /*value*/, bool* cannot_use) override {
+    std::string data = str_repr("find", cannot_use);
+    std::string split_method = str_repr("split", cannot_use);
+    std::string reverse_method = str_repr("reverse", cannot_use);
+    return data.empty() ? "" : "([][" + data + "]+[])[" + split_method + "]([]+[])[" + reverse_method + "]()[+[]]"; }
+};
 struct ClassArrayGenerator : Generator
 {
   static constexpr const char* generate = "fi Aay()";
@@ -268,6 +278,7 @@ auto build_dependency_tree()
   push_dependencies<FalseGenerator>(tree);
   push_dependencies<InfinityGenerator>(tree);
   push_dependencies<SquareBracketGenerator>(tree);
+  push_dependencies<ClosedCurlyBracedGenerator>(tree);
   push_dependencies<ClassArrayGenerator>(tree);
   push_dependencies<ClassBooleanGenerator>(tree);
   push_dependencies<ClassNumberGenerator>(tree);
