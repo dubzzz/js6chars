@@ -108,6 +108,14 @@ struct PlusGenerator : Generator
     std::string data = str_repr("1e30", cannot_use);
     return data.empty() ? "" : from_known(value, "1e+30", "+(" + data + ")"); }
 };
+struct MinusGenerator : Generator
+{
+  static constexpr const char* generate = "-";
+  static constexpr const char* require = "indexOf";
+  std::string operator() (char /*value*/, bool* cannot_use) override {
+    std::string data = str_repr("indexOf", cannot_use);
+    return data.empty() ? "" : "([][" + data + "]([])+[])[+[]]"; }
+};
 struct FindGenerator : Generator
 {
   static constexpr const char* generate = "ucto ()";
@@ -254,6 +262,7 @@ auto build_dependency_tree()
   push_dependencies<SmallerNanGenerator>(tree);
   push_dependencies<SmallerNanBisGenerator>(tree);
   push_dependencies<PlusGenerator>(tree);
+  push_dependencies<MinusGenerator>(tree);
   push_dependencies<FindGenerator>(tree);
   push_dependencies<TrueGenerator>(tree);
   push_dependencies<FalseGenerator>(tree);
