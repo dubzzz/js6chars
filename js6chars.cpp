@@ -72,7 +72,7 @@ struct UndefinedGenerator : Generator
 {
   static constexpr const char* generate = "undefi";
   static constexpr const char* require = "";
-  std::string operator() (char value, bool* /*cannot_use*/) override { return from_known(value, "undefined", "[][+[]]"); }
+  std::string operator() (char value, bool* /*cannot_use*/) override { return from_known(value, "undefined", "[][[]]"); }
 };
 struct CommaGenerator : Generator
 {
