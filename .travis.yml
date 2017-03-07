@@ -7,19 +7,19 @@ addons_shortcuts:
   addons_clang35: &clang35
     apt:
       sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports', 'llvm-toolchain-precise-3.5']
-      packages: ['clang-3.5', 'g++-4.9', 'cmake', 'cmake-data', 'nodejs', 'npm']
+      packages: ['clang-3.5', 'g++-4.9', 'cmake', 'cmake-data', 'nodejs']
   addons_clang38: &clang38
     apt:
       sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports', 'llvm-toolchain-precise-3.8']
-      packages: ['clang-3.8', 'g++-4.9', 'cmake', 'cmake-data', 'nodejs', 'npm']
+      packages: ['clang-3.8', 'g++-4.9', 'cmake', 'cmake-data', 'nodejs']
   addons_gcc49: &gcc49
     apt:
       sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports']
-      packages: ['g++-4.9', 'cmake', 'cmake-data', 'nodejs', 'npm']
+      packages: ['g++-4.9', 'cmake', 'cmake-data', 'nodejs']
   addons_gcc6: &gcc6
     apt:
       sources: ['ubuntu-toolchain-r-test', 'george-edison55-precise-backports']
-      packages: ['g++-6', 'cmake', 'cmake-data', 'nodejs', 'npm']
+      packages: ['g++-6', 'cmake', 'cmake-data', 'nodejs']
 
 matrix:
   include:
