@@ -55,6 +55,9 @@ if (( $? != 0 )); then err=1; fi;
 
 # Generate strings
 
+time ./test/check_output.sh -t "1e30"
+if (( $? != 0 )); then err=1; fi;
+
 time ./test/check_output.sh -t "find"
 if (( $? != 0 )); then err=1; fi;
 
@@ -73,7 +76,7 @@ if (( $? != 0 )); then err=1; fi;
 time ./test/check_output.sh -t "Hello"
 if (( $? != 0 )); then err=1; fi;
 
-time ./test/check_output.sh -t ",;:!?./§*-+^_|@()[]{}#~&\$£€\"\\\'"
+time ./test/check_output.sh -t ",;:!?./§*-+^_|@()[]{}#~&\$£€\""
 if (( $? != 0 )); then err=1; fi;
 
 # Generate scripts
