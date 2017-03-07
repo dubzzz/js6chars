@@ -100,6 +100,12 @@ struct SmallerNanBisGenerator : Generator
   static constexpr const char* require = "";
   std::string operator() (char value, bool* /*cannot_use*/) override { return from_known(value, "NaN", "+[][+[]]"); }
 };
+struct SmallerNanTerGenerator : Generator
+{
+  static constexpr const char* generate = "Na";
+  static constexpr const char* require = "";
+  std::string operator() (char value, bool* /*cannot_use*/) override { return from_known(value, "NaN", "+[![]]"); }
+};
 struct PlusGenerator : Generator
 {
   static constexpr const char* generate = "+";
