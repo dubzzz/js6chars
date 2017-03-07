@@ -21,8 +21,10 @@ static std::string small_number_repr(int value)
   return value == 0
       ? "+[]"
       : value == 1
-        ? "!+[]+!+[]"
-        : "!+[]+" + number_repr(value -1);
+        ? "+!+[]"
+        : value == 2
+          ? "!+[]+!+[]"
+          : "!+[]+" + number_repr(value -1);
 }
 
 static std::string number_repr_helper(int value)
