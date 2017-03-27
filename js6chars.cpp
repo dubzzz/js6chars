@@ -396,7 +396,7 @@ std::string str_repr(const char* str, bool* cannot_use)
       {
         forchar = forchar.substr(0, forchar.size() -3);
       }
-      if (forchar[0] == '+')
+      if (forchar[0] == '+' || (forchar.size() >= 2 && forchar[0] == '!' && forchar[1] == '+'))
       {
         out += '(';
         out += forchar;
