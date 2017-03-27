@@ -11,6 +11,9 @@ if (( $? != 0 )); then err=1; fi;
 time ./test/check_output.sh -n -5   # negative numbers require a conversion to String to append '-'
 if (( $? != 0 )); then err=1; fi;
 
+time ./test/check_output.sh -n -271   # large negative number
+if (( $? != 0 )); then err=1; fi;
+
 # Generate character
 # Various one-character tests to check various milestone values
 
@@ -54,6 +57,21 @@ time ./test/check_output.sh -c {
 if (( $? != 0 )); then err=1; fi;
 
 time ./test/check_output.sh -c }
+if (( $? != 0 )); then err=1; fi;
+
+time ./test/check_output.sh -c @
+if (( $? != 0 )); then err=1; fi;
+
+time ./test/check_output.sh -c $
+if (( $? != 0 )); then err=1; fi;
+
+time ./test/check_output.sh -c €
+if (( $? != 0 )); then err=1; fi;
+
+time ./test/check_output.sh -c £
+if (( $? != 0 )); then err=1; fi;
+
+time ./test/check_output.sh -c §
 if (( $? != 0 )); then err=1; fi;
 
 # Generate strings
