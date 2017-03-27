@@ -23,6 +23,9 @@ if (( $? != 0 )); then err=1; fi;
 time ./test/check_output.sh -c a
 if (( $? != 0 )); then err=1; fi;
 
+time ./test/check_output.sh -c e
+if (( $? != 0 )); then err=1; fi;
+
 time ./test/check_output.sh -c +
 if (( $? != 0 )); then err=1; fi;
 
@@ -54,6 +57,9 @@ time ./test/check_output.sh -c }
 if (( $? != 0 )); then err=1; fi;
 
 # Generate strings
+
+time ./test/check_output.sh -t "30"
+if (( $? != 0 )); then err=1; fi;
 
 time ./test/check_output.sh -t "1e30"
 if (( $? != 0 )); then err=1; fi;
